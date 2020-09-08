@@ -8,6 +8,8 @@
  * https://arduining.com/2015/08/20/nodemcu-breathing-led-with-arduino-ide/
 */
 
+//Sep 07 2020 corrected digitalWrite in void loop
+
 #define LED     D0                   // Led in NodeMCU at pin GPIO16 (D0).
  
 #define BRIGHT    350                // max led intensity (1-500)
@@ -22,17 +24,17 @@ void setup() {
 void loop() {
   //ramp increasing intensity, Inhalation: 
   for (int i=1;i<BRIGHT;i++){
-    digitalWrite(LED, LOW);          // turn the LED on.
+    digitalWrite(LED, LOW);          // turn the LED off.
     delayMicroseconds(i*10);         // wait
-    digitalWrite(LED, HIGH);         // turn the LED off.
+    digitalWrite(LED, HIGH);         // turn the LED on.
     delayMicroseconds(PULSE-i*10);   // wait
     yield();                         // to prevent watchdog firing.
   }
   //ramp decreasing intensity, Exhalation (half time):
   for (int i=BRIGHT-1;i>0;i--){
-    digitalWrite(LED, LOW);          // turn the LED on.
+    digitalWrite(LED, HIGH);          // turn the LED on.
     delayMicroseconds(i*10);         // wait
-    digitalWrite(LED, HIGH);         // turn the LED off.
+    digitalWrite(LED, LOW);         // turn the LED off.
     delayMicroseconds(PULSE-i*10);   // wait
     yield();                         //to prevent watchdog firing.
   }
